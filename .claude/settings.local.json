@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(powershell:*)",
+      "Bash(mvn clean:*)",
+      "Bash(npm install:*)",
+      "Bash(dir:*)",
+      "Bash(mkdir:*)",
+      "WebSearch",
+      "Bash(timeout:*)",
+      "Bash(find:*)",
+      "Bash(netstat:*)",
+      "Bash(findstr:*)",
+      "Bash(tasklist:*)",
+      "Bash(cat:*)",
+      "Bash(ls:*)",
+      "Bash(mvn spring-boot:run:*)",
+      "Bash(npm run build:*)"
+    ]
+  }
+}

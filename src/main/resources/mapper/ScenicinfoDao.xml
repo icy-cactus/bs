@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dao.ScenicinfoDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.entity.ScenicinfoEntity" id="scenicinfoMap">
+        <result property="scenicname" column="scenicname"/>
+        <result property="address" column="address"/>
+        <result property="sceniclevel" column="sceniclevel"/>
+        <result property="price" column="price"/>
+        <result property="telephone" column="telephone"/>
+        <result property="introduce" column="introduce"/>
+        <result property="scenicphoto" column="scenicphoto"/>
+        <result property="thumbsupnum" column="thumbsupnum"/>
+        <result property="crazilynum" column="crazilynum"/>
+        <result property="clicktime" column="clicktime"/>
+        <result property="clicknum" column="clicknum"/>
+		<result property="content" column="content"/>
+		<result property="merchantusername" column="merchantusername"/>
+		<result property="merchantname" column="merchantname"/>
+    </resultMap>
+
+
+
+    <select id="selectListView"
+		resultType="com.entity.view.ScenicinfoView" >
+
+		SELECT  scenicinfo.* FROM scenicinfo  scenicinfo
+        <where> 1=1 ${ew.sqlSegment}</where>
+	</select>
+	
+	<select id="selectView"
+		resultType="com.entity.view.ScenicinfoView" >
+		SELECT * FROM scenicinfo  scenicinfo <where> 1=1 ${ew.sqlSegment}</where>
+	</select>
+	
+
+</mapper>

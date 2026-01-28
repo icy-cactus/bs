@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dao.TicketreserveDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.entity.TicketreserveEntity" id="ticketreserveMap">
+        <result property="scenicname" column="scenicname"/>
+        <result property="address" column="address"/>
+        <result property="price" column="price"/>
+        <result property="sceniclevel" column="sceniclevel"/>
+        <result property="reservetime" column="reservetime"/>
+        <result property="remark" column="remark"/>
+        <result property="username" column="username"/>
+        <result property="name" column="name"/>
+        <result property="telephone" column="telephone"/>
+        <result property="ispay" column="ispay"/>
+
+		<result property="refid" column="refid"/>
+		<result property="rating" column="rating"/>
+		<result property="review" column="review"/>
+		<result property="sfsh" column="sfsh"/>
+		<result property="shhf" column="shhf"/>
+		<result property="avatar" column="avatar"/>
+		<result property="merchantusername" column="merchantusername"/>
+		<result property="merchantname" column="merchantname"/>
+    </resultMap>
+
+
+
+    <select id="selectListView"
+		resultType="com.entity.view.TicketreserveView" >
+
+		SELECT  ticketreserve.* FROM ticketreserve  ticketreserve
+        <where> 1=1 ${ew.sqlSegment}</where>
+	</select>
+	
+	<select id="selectView"
+		resultType="com.entity.view.TicketreserveView" >
+		SELECT * FROM ticketreserve  ticketreserve <where> 1=1 ${ew.sqlSegment}</where>
+	</select>
+	<select id="calculateRating" resultType="double">
+		SELECT AVG(rating) FROM ticketreserve WHERE refid = #{id} AND sfsh = '已评价'
+	</select>
+
+</mapper>

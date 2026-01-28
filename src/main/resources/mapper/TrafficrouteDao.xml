@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dao.TrafficrouteDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.entity.TrafficrouteEntity" id="trafficrouteMap">
+        <result property="trafficname" column="trafficname"/>
+        <result property="traffictype" column="traffictype"/>
+        <result property="origin" column="origin"/>
+        <result property="destination" column="destination"/>
+        <result property="distance" column="distance"/>
+        <result property="trafficcontent" column="trafficcontent"/>
+        <result property="trafficphoto" column="trafficphoto"/>
+		<result property="content" column="content"/>
+    </resultMap>
+
+
+
+    <select id="selectListView"
+		resultType="com.entity.view.TrafficrouteView" >
+
+		SELECT  trafficroute.* FROM trafficroute  trafficroute
+        <where> 1=1 ${ew.sqlSegment}</where>
+	</select>
+	
+	<select id="selectView"
+		resultType="com.entity.view.TrafficrouteView" >
+		SELECT * FROM trafficroute  trafficroute <where> 1=1 ${ew.sqlSegment}</where>
+	</select>
+	
+
+</mapper>
