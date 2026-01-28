@@ -1,15 +1,13 @@
 package com.controller;
 
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Map;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Date;
+import java.util.*;
 import javax.servlet.http.HttpServletRequest;
 
+import com.baomidou.mybatisplus.plugins.Page;
+import com.entity.StoreupEntity;
 import com.service.TicketreserveService;
+import com.utils.RecommendUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -272,6 +270,36 @@ public class ScenicinfoController {
 
 
 
+
+    /**
+     * 基于用户的协同过滤推荐
+     */
+    @IgnoreAuth
+    @RequestMapping("/recommend")
+    public R recommend(HttpServletRequest request) {
+        Long userId = (Long) request.getSession().getAttribute("userId");
+        if (userId == null) {
+            // 如果未登录，返回点击量最高的（兜底方案）
+            EntityWrapper<ScenicinfoEntity> ew = new EntityWrapper<>();
+            ew.orderBy("clicknum", false);
+            return R.ok().put("data", scenicinfoService.selectPage(new Page<>(1, 6), ew).getRecords());
+        }
+
+        // 1. 获取所有收藏记录用于计算
+        List<StoreupEntity> allStoreups = storeupService.selectList(new EntityWrapper<StoreupEntity>().eq("type", 1));
+
+        // 2. 调用算法获取推荐ID列表
+        List<Long> recommendIds = RecommendUtil.userBasedRecommend(allStoreups, userId);
+
+        // 3. 根据ID查询景点详情
+        if (recommendIds.isEmpty()) {
+            // 推荐不足时用热门补位
+            return R.ok().put("data", scenicinfoService.selectList(new EntityWrapper<ScenicinfoEntity>().orderBy("clicknum", false).last("limit 6")));
+        }
+
+        List<ScenicinfoEntity> result = scenicinfoService.selectBatchIds(recommendIds);
+        return R.ok().put("data", result);
+    }
 
 
 

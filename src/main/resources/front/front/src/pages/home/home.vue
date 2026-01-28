@@ -895,7 +895,8 @@ export default {
     },
     getList() {
       let autoSortUrl = "";
-      autoSortUrl = "scenicinfo/autoSort";
+/*      autoSortUrl = "scenicinfo/autoSort";*/
+      autoSortUrl = "scenicinfo/recommend";
       this.$http
         .get(autoSortUrl, {
           params: {
